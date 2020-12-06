@@ -5,9 +5,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gettaxi/helpers/brand_colors.dart';
-import 'package:gettaxi/screens/loginpage.dart';
-import 'package:gettaxi/screens/mainpage.dart';
-import 'package:gettaxi/widgets/taxibutton.dart';
+import 'package:gettaxi/screens/login_page.dart';
+import 'package:gettaxi/screens/main_page.dart';
+import 'package:gettaxi/widgets/progress_dialog.dart';
+import 'package:gettaxi/widgets/taxi_button.dart';
 
 class RegisterPage extends StatefulWidget {
   //ROUTE ID
@@ -51,14 +52,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 40),
                   Text(
-                    "Create a Rider's Account",
+                    "Cadastro Motorista",
                     style: TextStyle(fontSize: 25, fontFamily: 'Brand-Bold'),
                   ),
                   TextFormField(
                     controller: fullnameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                      labelText: "Full name",
+                      labelText: "Nome completo",
                       labelStyle: TextStyle(fontSize: 14),
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
@@ -88,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
-                      labelText: "Phone Number",
+                      labelText: "Telefone",
                       labelStyle: TextStyle(fontSize: 14),
                       hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
@@ -105,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: true,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "Senha",
                         labelStyle: TextStyle(fontSize: 14),
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                       ),
@@ -117,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }),
                   SizedBox(height: 40),
                   TaxiButton(
-                    title: "REGISTER",
+                    title: "Cadastrar",
                     color: BrandColors.colorGreen,
                     onPressed: () async {
 
@@ -135,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Navigator.pushNamedAndRemoveUntil(
                           context, LoginPage.id, (route) => false);
                     },
-                    child: Text("Already have a Rider account? Log in"),
+                    child: Text("Tem uma conta Motorista? Entrar"),
                   )
                 ],
               ),
@@ -147,11 +148,19 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void registerUser() async {
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) =>
+            ProgressDialog(status: "Cadastrando"));
+
     final FirebaseUser user = (await _auth
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
             .catchError((onError) {
       //Verificando erro e mostrando message
+      Navigator.pop(context);
       PlatformException thisEx = onError;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(thisEx.message),
@@ -161,6 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }))
         .user;
     // verifica se o reistro é feito cm successo
+    Navigator.pop(context);
     if (user != null) {
       DatabaseReference newUserRef =
           FirebaseDatabase.instance.reference().child("users/${user.uid}");

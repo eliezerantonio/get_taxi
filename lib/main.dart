@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gettaxi/screens/loginpage.dart';
-import 'package:gettaxi/screens/mainpage.dart';
-import 'package:gettaxi/screens/registerpage.dart';
+import 'package:gettaxi/screens/login_page.dart';
+import 'package:gettaxi/screens/main_page.dart';
+import 'package:gettaxi/screens/register_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Brand-Regular', primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
-      initialRoute: RegisterPage.id,
+
+      initialRoute: MainPage.id,
       routes: {
         RegisterPage.id: (context) => RegisterPage(),
         LoginPage.id: (context) => LoginPage(),
