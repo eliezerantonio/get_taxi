@@ -34,7 +34,7 @@ dependencies:
   connectivity: ^2.0.2
   google_maps_flutter: ^0.5.28
   outline_material_icons: ^0.1.1
-
+  geolocator: ^5.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

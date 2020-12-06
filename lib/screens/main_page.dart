@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:geolocator/geolocator.dart';
 import 'package:gettaxi/styles/styles.dart';
 import 'package:gettaxi/widgets/brand_divider.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -15,6 +16,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  //start google_map
   Completer<GoogleMapController> _controller = Completer();
 
   GoogleMapController mapController;
@@ -25,7 +27,27 @@ class _MainPageState extends State<MainPage> {
     zoom: 15.4746,
   );
 
+//end google_map
+
+  //Global Keys
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //geolocator
+
+  var geoLocator = Geolocator();
+  Position currentPosition;
+
+  void setPositionLocator() async {
+    Position positon = await geoLocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+
+    currentPosition = positon;
+
+    LatLng pos = LatLng(positon.latitude, positon.longitude);
+    CameraPosition cp = CameraPosition(target: pos, zoom: 15);
+
+    mapController.animateCamera(CameraUpdate.newCameraPosition(cp));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +121,9 @@ class _MainPageState extends State<MainPage> {
             mapType: MapType.normal,
             myLocationButtonEnabled: true,
             initialCameraPosition: _kGooglePlex,
+            myLocationEnabled: true,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
               mapController = controller;
@@ -106,6 +131,7 @@ class _MainPageState extends State<MainPage> {
               setState(() {
                 mapBottomPadding = 290;
               });
+              setPositionLocator();
             },
           ),
           //MenuButton
