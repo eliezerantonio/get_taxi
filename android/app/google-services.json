@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "768230283735",
+    "firebase_url": "https://gettaxi-661b5-default-rtdb.firebaseio.com",
+    "project_id": "gettaxi-661b5",
+    "storage_bucket": "gettaxi-661b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768230283735:android:984e5f6b1243c857869392",
+        "android_client_info": {
+          "package_name": "com.eliezer.gettaxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768230283735-ko9l9arllsj9rc8lp2ecupj5ju1nnril.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_ndbdDcp4zJqOIDA4xf0L71kRGIsHdOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768230283735-ko9l9arllsj9rc8lp2ecupj5ju1nnril.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
